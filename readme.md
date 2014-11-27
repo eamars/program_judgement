@@ -1,6 +1,5 @@
 # Program judgement system
-### Author: Ran Bao
---------------------
+
 ## Component
 running_time.c -- set the timer for a certain program testing if running too slow.
 
