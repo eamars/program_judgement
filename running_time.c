@@ -66,7 +66,7 @@ main(int argc, char **argv){
 		char buf[80];
 
 		/* Create a new pipe that execute the command and forward to stdout */
-		FILE *fp;
+		FILE *fp = NULL;
 
 		/* Start the timer that counts [timeout] seconds */
 		alarm(atoi(argv[2]));
