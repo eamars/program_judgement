@@ -65,13 +65,15 @@ main(int argc, char **argv){
 		/* Create a buffer that capture the output from stream */	
 		char buf[80];
 
+		/* Create a new pipe that execute the command and forward to stdout */
+		FILE *fp;
+
 		/* Start the timer that counts [timeout] seconds */
 		alarm(atoi(argv[2]));
 		
 		printf("You have %d second to finish your task.\n", atoi(argv[2]));
 		
-		/* Create a new pipe that execute the command and forward to stdin */
-		FILE *fp;
+		/* Execute the command and terminate if timeout */
 		if ((fp = popen(argv[1], "r")) == NULL){
 			error_msg(ERROR, "Failed to open pipe");
 		}
@@ -81,10 +83,10 @@ main(int argc, char **argv){
 			printf(">> %s", buf);
 		}
 		pclose(fp);
-		
-				
+
 		/* Terminate the process normally */
 		alarm(0);
+		
 		exit(SUCCESS);
 	}
 
