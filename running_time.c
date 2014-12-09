@@ -1,8 +1,8 @@
 /*
    Judge system
-   
+
    This is the judge system for any executable program with standard input and output.
-   The program can be set to run under certain parameter and maximun running time. The 
+   The program can be set to run under certain parameter and maximun running time. The
    Output of program are compared with given example.
 
 	Author:	 Ran Bao
@@ -20,7 +20,8 @@
 #define SUCCESS 0
 
 /*
-	sig_alrm is used to replace the default action for SIGALRM. This function is used to terminate the process that running out of the time.
+	sig_alrm is used to replace the default action for SIGALRM. This function
+    is used to terminate the process that running out of the time.
 */
 static void
 sig_alrm(int signo){
@@ -28,12 +29,12 @@ sig_alrm(int signo){
 }
 
 /* handy function that takes the error code and print the error message */
-void 
+void
 error_msg(int errno, char *message){
 	printf("%s\n", message);
 	exit(errno);
 }
-	
+
 
 
 
@@ -61,8 +62,8 @@ main(int argc, char **argv){
 		if (signal(SIGALRM, sig_alrm) == SIG_ERR){
 			error_msg(ERROR, "Failed to catch SIGALRM");
 		}
-		
-		/* Create a buffer that capture the output from stream */	
+
+		/* Create a buffer that capture the output from stream */
 		char buf[80];
 
 		/* Create a new pipe that execute the command and forward to stdout */
@@ -70,14 +71,14 @@ main(int argc, char **argv){
 
 		/* Start the timer that counts [timeout] seconds */
 		alarm(atoi(argv[2]));
-		
+
 		printf("You have %d second to finish your task.\n", atoi(argv[2]));
-		
+
 		/* Execute the command and terminate if timeout */
 		if ((fp = popen(argv[1], "r")) == NULL){
 			error_msg(ERROR, "Failed to open pipe");
 		}
-		
+
 		/* Read the output from pipe until read the NULL */
 		while (fgets(buf, 80, fp) != NULL){
 			printf(">> %s", buf);
@@ -86,7 +87,7 @@ main(int argc, char **argv){
 
 		/* Terminate the process normally */
 		alarm(0);
-		
+
 		exit(SUCCESS);
 	}
 
